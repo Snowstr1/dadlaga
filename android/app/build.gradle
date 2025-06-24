@@ -1,0 +1,46 @@
+plugins {
+    id 'com.android.application'
+    // START: FlutterFire Configuration
+    id 'com.google.gms.google-services'
+    // END: FlutterFire Configuration
+    id 'kotlin-android'
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id 'dev.flutter.flutter-gradle-plugin'
+}
+
+android {
+    namespace 'com.example.new_app'
+    compileSdk flutter.compileSdkVersion
+    ndkVersion "27.0.12077973"
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+    
+    def flutterMinSdkVersion = project.hasProperty('flutter.minSdkVersion') ? flutter.minSdkVersion : 23
+
+
+    defaultConfig {
+        applicationId "com.example.new_app"
+        minSdkVersion flutterMinSdkVersion
+        targetSdk flutter.targetSdkVersion
+        versionCode flutter.versionCode
+        versionName flutter.versionName
+    }
+
+    buildTypes {
+        release {
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}

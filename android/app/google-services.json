@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "469070216649",
+    "project_id": "dadlaga2025",
+    "storage_bucket": "dadlaga2025.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:469070216649:android:957287c657b410420bbc18",
+        "android_client_info": {
+          "package_name": "com.example.new_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCrCe0sh1QNvOaOIv6kt_-dKnJmb0t6yE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
