@@ -13,14 +13,19 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController controllerEmail = TextEditingController();
+  final TextEditingController controllerName = TextEditingController();
+  final TextEditingController controllerPhone = TextEditingController();
   final TextEditingController controllerPassword = TextEditingController();
 
   String errorMessage = '';
   bool isLoading = false;
+  String selectedRole = 'Student'; // default role
 
   @override
   void dispose() {
     controllerEmail.dispose();
+    controllerName.dispose();
+    controllerPhone.dispose();
     controllerPassword.dispose();
     super.dispose();
   }
@@ -36,7 +41,10 @@ class _RegisterPageState extends State<RegisterPage> {
     try {
       await authService.value.createAccount(
         email: controllerEmail.text.trim(),
+        name: controllerName.text.trim(),
+        phone: controllerPhone.text.trim(),
         password: controllerPassword.text.trim(),
+        role: selectedRole,  // pass role here
       );
 
       Navigator.pushReplacement(
@@ -76,15 +84,37 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               const SizedBox(height: 30),
 
+              // Name field
+              TextFormField(
+                controller: controllerName,
+                decoration: const InputDecoration(labelText: 'Full Name'),
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Enter your name' : null,
+              ),
+              const SizedBox(height: 15),
+
+              // Phone field
+              TextFormField(
+                controller: controllerPhone,
+                decoration: const InputDecoration(labelText: 'Phone Number'),
+                keyboardType: TextInputType.phone,
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Enter your phone number' : null,
+              ),
+              const SizedBox(height: 15),
+
+              // Email field
               TextFormField(
                 controller: controllerEmail,
                 decoration: const InputDecoration(labelText: 'Email'),
                 validator: (value) => value == null || !value.contains('@')
                     ? 'Enter a valid email'
                     : null,
+                keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 15),
 
+              // Password field
               TextFormField(
                 controller: controllerPassword,
                 decoration: const InputDecoration(labelText: 'Password'),
@@ -92,6 +122,24 @@ class _RegisterPageState extends State<RegisterPage> {
                 validator: (value) => value == null || value.length < 6
                     ? 'Password must be at least 6 characters'
                     : null,
+              ),
+              const SizedBox(height: 15),
+
+              // Role dropdown
+              DropdownButtonFormField<String>(
+                value: selectedRole,
+                decoration: const InputDecoration(labelText: 'Select Role'),
+                items: ['Student', 'Teacher']
+                    .map((role) => DropdownMenuItem(
+                          value: role,
+                          child: Text(role),
+                        ))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedRole = value!;
+                  });
+                },
               ),
               const SizedBox(height: 30),
 
